@@ -81,7 +81,7 @@ object TrainModel {
       val test_full = test_xfm.withColumn("label", test_xfm.col("isFraud")).select("label", "features")
       
       val numRound = 10
-      val numWorkers = 4
+      val numWorkers = 2
 
       val paramMap = List(
         "eta"-> 0.023f,
@@ -100,5 +100,7 @@ object TrainModel {
       val xgBoostModel = XGBoost.trainWithDataFrame(train_full, paramMap, round=numRound, nWorkers=numWorkers, useExternalMemory=true)
       val predictions = xgBoostModel.setExternalMemory(true).transform(test_full).select("label", "probabilities")
       predictions.show(10)
+      
+      xgBoostModel.save("myFraudModel")
    }
 }
