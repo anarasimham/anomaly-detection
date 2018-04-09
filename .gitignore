@@ -1,3 +1,6 @@
 target
 project
 *.swp
+*.log
+error
+out
