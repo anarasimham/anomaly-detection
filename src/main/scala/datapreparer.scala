@@ -18,8 +18,6 @@ class DataPreparer(val filename: String) {
       .option("header", true)
       .csv(filename)
 
-    System.out.println("before data")
-    System.out.println(data)
     data.printSchema
     System.out.println(data.take(5).foreach(println))
     System.out.println("OK");
@@ -33,10 +31,6 @@ class DataPreparer(val filename: String) {
       .drop("isFlaggedFraud")
 
     fraudData.take(50).foreach(println)
-    //fraudData.withColumn("type_num", "type == 'TRANSFER'", 0).otherwise(1)
-    //fraudData.take(5).foreach(println)
-    System.out.println("test test")
-    System.out.println(fraudData.getClass.getName)
     
     var transfers = fraudData.filter("type in ('TRANSFER')")
     var cashouts = fraudData.filter("type in ('CASH_OUT')")
@@ -45,7 +39,6 @@ class DataPreparer(val filename: String) {
     cashouts = cashouts.withColumn("type", lit(1))
     fraudData = transfers.union(cashouts)
 
-    fraudData.take(50).foreach(println)
 
     def calcDelta(
       startBal: Column, 
@@ -68,6 +61,8 @@ class DataPreparer(val filename: String) {
        fraudData.col("amount")
       )
     )
+
+    fraudData.take(50).foreach(println)
     return fraudData
 
   }
