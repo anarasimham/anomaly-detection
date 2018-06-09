@@ -9,7 +9,7 @@ I've taken the approach and converted it into a Scala-based productionalized mod
 
 A few pre-requisites that you'll need to setup before being able to execute this application:
 - Compile the XGBoost library and install it locally. Compilation instructions can be found here: http://xgboost.readthedocs.io/en/latest/build.html
-  - Once you download the repository, you'll need to `git checkout tags/v0.71` to have the version of the XGBoost code that I used
+  - Once you download the repository, you'll need to `git checkout tags/v0.71` to have the version of the XGBoost code that this project has been tested with
 - Install CMake's latest version to build with. On CentOS, I had to manually install using `wget https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz`
 - Copy the transaction data from the Kaggle source site into HDFS
   - First download the data from the above Kaggle link
@@ -17,6 +17,7 @@ A few pre-requisites that you'll need to setup before being able to execute this
 - Install Maven. On CentOS I was able to `yum install maven`
 - Install SBT: https://www.scala-sbt.org/1.0/docs/Installing-sbt-on-Linux.html
 - A YARN cluster on which you can run Spark jobs
+- Download the dataset from https://www.kaggle.com/arjunjoshua/predicting-fraud-in-financial-payment-services/data and place into HDFS via a `hdfs dfs -put`. You will reference this in the training step so be sure to give it a name that is easy to remember. I used `fin_data.csv`
 
 ### Building 
 
