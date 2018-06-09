@@ -22,8 +22,8 @@ A few pre-requisites that you'll need to setup before being able to execute this
 
 1. Update the `create_jni.py` file in the `jvm_packages` folder of the XGBoost source before building. Add the following lines to the `CONFIG = ` section
     1. `"USE_HDFS": "ON"` (already present, change OFF to ON)
-    1. `"HDFS_INCLUDE_DIR": "/usr/hdp/2.6.4.5-2/usr/include/"`
-    1. `"HDFS_LIB": "/usr/hdp/2.6.4.5-2/usr/lib/libhdfs.so"`
+    1. `"HDFS_INCLUDE_DIR": "/usr/hdp/<HDP-VERSION>/usr/include/"`
+    1. `"HDFS_LIB": "/usr/hdp/<HDP-VERSION>/usr/lib/libhdfs.so"`
 1. `cd` into the `jvm-packages` folder of the XGBoost Git repository and `mvn install`. This should install the XGBoost package locally (`~/.m2`)
 1. Go into the `anomaly-detection` Git repo that you've cloned and run `sbt assembly`
 
