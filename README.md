@@ -9,7 +9,7 @@ I've taken the approach and converted it into a Scala-based productionalized mod
 
 A few pre-requisites that you'll need to setup before being able to execute this application:
 - Compile the XGBoost library and install it locally. Compilation instructions can be found here: http://xgboost.readthedocs.io/en/latest/build.html
-  - Once you download the repository, you'll need to `git checkout tags/v0.71` to have the version of the XGBoost code that I used
+  - Once you download the repository, you'll need to `git checkout tags/v0.71` to have the version of the XGBoost code that this project has been tested with
 - Install CMake's latest version to build with. On CentOS, I had to manually install using `wget https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz`
 - Copy the transaction data from the Kaggle source site into HDFS
   - First download the data from the above Kaggle link
@@ -22,8 +22,8 @@ A few pre-requisites that you'll need to setup before being able to execute this
 
 1. Update the `create_jni.py` file in the `jvm_packages` folder of the XGBoost source before building. Add the following lines to the `CONFIG = ` section
     1. `"USE_HDFS": "ON"` (already present, change OFF to ON)
-    1. `"HDFS_INCLUDE_DIR": "/usr/hdp/2.6.4.5-2/usr/include/"`
-    1. `"HDFS_LIB": "/usr/hdp/2.6.4.5-2/usr/lib/libhdfs.so"`
+    1. `"HDFS_INCLUDE_DIR": "/usr/hdp/<HDP-VERSION>/usr/include/"`
+    1. `"HDFS_LIB": "/usr/hdp/<HDP-VERSION>/usr/lib/libhdfs.so"`
 1. `cd` into the `jvm-packages` folder of the XGBoost Git repository and `mvn install`. This should install the XGBoost package locally (`~/.m2`)
 1. Go into the `anomaly-detection` Git repo that you've cloned and run `sbt assembly`
 
@@ -35,7 +35,7 @@ Train the model by executing the following:
 The argument at the end of the above command is where you would like to save the trained model.
 
 Test the trained model by executing the following:
-`SPARK_MAJOR_VERSION=2 spark-submit --class test.BatchTestModel --deploy-mode cluster --master yarn --executor-memory 2G --driver-memory 2G target/scala-2.11/Anomaly\ Trainer-assembly-1.0.jar /path/to/saved/FraudModel /path/to/testData`
+`SPARK_MAJOR_VERSION=2 spark-submit --class test.BatchTestModel --deploy-mode cluster --master yarn --executor-memory 2G --driver-memory 2G target/scala-2.11/Anomaly\ Trainer-assembly-1.0.jar hdfs://<NAMENODE_HOST_NAME>:8020/path/to/saved/FraudModel /path/to/testData`
 The above are the same except for the class being executed
 
 You will need the test dataset, which is in the `resources` folder, on HDFS. As you can see in the above test CLI, there are two arguments.
