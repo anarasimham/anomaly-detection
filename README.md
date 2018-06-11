@@ -17,7 +17,6 @@ A few pre-requisites that you'll need to setup before being able to execute this
 - Install Maven. On CentOS I was able to `yum install maven`
 - Install SBT: https://www.scala-sbt.org/1.0/docs/Installing-sbt-on-Linux.html
 - A YARN cluster on which you can run Spark jobs
-- Download the dataset from https://www.kaggle.com/arjunjoshua/predicting-fraud-in-financial-payment-services/data and place into HDFS via a `hdfs dfs -put`. You will reference this in the training step so be sure to give it a name that is easy to remember. I used `fin_data.csv`
 
 ### Building 
 
@@ -36,7 +35,7 @@ Train the model by executing the following:
 The argument at the end of the above command is where you would like to save the trained model.
 
 Test the trained model by executing the following:
-`SPARK_MAJOR_VERSION=2 spark-submit --class test.BatchTestModel --deploy-mode cluster --master yarn --executor-memory 2G --driver-memory 2G target/scala-2.11/Anomaly\ Trainer-assembly-1.0.jar /path/to/saved/FraudModel /path/to/testData`
+`SPARK_MAJOR_VERSION=2 spark-submit --class test.BatchTestModel --deploy-mode cluster --master yarn --executor-memory 2G --driver-memory 2G target/scala-2.11/Anomaly\ Trainer-assembly-1.0.jar hdfs://<NAMENODE_HOST_NAME>:8020/path/to/saved/FraudModel /path/to/testData`
 The above are the same except for the class being executed
 
 You will need the test dataset, which is in the `resources` folder, on HDFS. As you can see in the above test CLI, there are two arguments.
