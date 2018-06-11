@@ -17,8 +17,8 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "ml.dmlc" % "xgboost4j" % "0.8-SNAPSHOT",
-  "ml.dmlc" % "xgboost4j-spark" % "0.8-SNAPSHOT"
+  "ml.dmlc" % "xgboost4j" % "0.80-SNAPSHOT",
+  "ml.dmlc" % "xgboost4j-spark" % "0.80-SNAPSHOT"
 )
 
 assemblyMergeStrategy in assembly := {

@@ -21,7 +21,7 @@ object BatchTestModel {
       fraudData.show
       fraudData = prep.vectorize(fraudData)
 
-      val fraudModel = XGBoost.loadModelFromHadoopFile("hdfs://anarasimham-hdp2-19-master-0.field.hortonworks.com:8020"+args(0))
+      val fraudModel = XGBoost.loadModelFromHadoopFile(args(0))
       System.out.println(fraudModel)
       //val predictions = fraudModel.predict(fraudData.select("features","label"))
       val predictions = fraudModel.setExternalMemory(true).transform(fraudData).select("label", "probabilities")
